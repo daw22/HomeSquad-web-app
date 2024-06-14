@@ -9,7 +9,10 @@ function App() {
       .then(data => setMessage(data.status));
   }, []);
 
-  return <div>status: {message}</div>;
+  return <div>
+    status: {message}
+    Any other text
+    </div>;
 }
 
 export default App;
