@@ -3,7 +3,7 @@ import api from './api/index.js';
 import cors from 'cors'
 
 const app = express();
-app.use(cors());
+app.use(cors({origin: 'https://homesquad-5zr4.onrender.com/'}));
 app.use(express.json());
 
 //routes
