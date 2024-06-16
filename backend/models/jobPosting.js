@@ -27,6 +27,11 @@ const jobPostingSchema = new mongoose.Schema(
             type: [String],
             default: []
         },
+        bids: {
+            type: [mongoose.Types.ObjectId],
+            ref: 'bid',
+            default: []
+        },
         stillOpen: {
             type: Boolean,
             defult: true,

@@ -1,28 +1,5 @@
 import mongoose from 'mongoose';
 
-
-const job = mongoose.Schema(
-    {
-        price: {
-            type: Number,
-        },
-        jobPosting: {
-            type: mongoose.Types.ObjectId,
-            ref: 'jobPosting',
-        },
-        jobOffer: {
-            type: mongoose.Types.ObjectId,
-            ref: 'jobOffer'
-        },
-        hireDate: {
-            type: Date,
-            required: true
-        },
-        completedDate: {
-            type: Date,
-        }
-    }
-)
 const workerProfileSchema = new mongoose.Schema(
     {
         firstName: {
@@ -57,8 +34,9 @@ const workerProfileSchema = new mongoose.Schema(
             type: Number,
             default: 0
        },
-       jobsHistory: {
-            type: [job],
+       jobOffers: {
+            type: [mongoose.Types.ObjectId],
+            ref: 'jobOffer',
             default: []
        },
        address: {
