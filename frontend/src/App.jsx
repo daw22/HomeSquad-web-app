@@ -4,7 +4,7 @@ function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('https://homesquad-api.onrender.com/api/status')
+    fetch('https://api-homesquad.onrender.com/api/status')
       .then(response => response.json())
       .then(data => setMessage(data.status));
   }, []);
