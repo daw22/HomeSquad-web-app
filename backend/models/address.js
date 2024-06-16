@@ -10,6 +10,9 @@ const addressSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        streetName: {
+            type: String,
+        },
         location :{
             type: { type: String, default: 'Point' }, //geoSpatial point
             coordinates: [Number] //[longitude, latitude] in this order

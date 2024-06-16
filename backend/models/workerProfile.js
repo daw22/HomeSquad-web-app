@@ -22,7 +22,7 @@ const workerProfileSchema = new mongoose.Schema(
             type: String,
             defuault: "",
         },
-        bio: {
+        aboutYourSelf: {
             type: String,
             default: "",
         },
@@ -30,7 +30,7 @@ const workerProfileSchema = new mongoose.Schema(
             type: String,
             default: "0.0"
         },
-       numberOfJobs: {
+       numberOfJobsCompleted: {
             type: Number,
             default: 0
        },

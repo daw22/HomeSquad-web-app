@@ -49,7 +49,7 @@ const homeownerProfileSchema = new mongoose.Schema({
     type: String,
     defuault: "",
   },
-  bio: {
+  aboutYourSelf: {
     type: String,
     default: "",
   },
