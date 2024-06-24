@@ -19,13 +19,14 @@ const homeownerAccountSchema = new mongoose.Schema(
         profile:{
             type: mongoose.Types.ObjectId,
             ref: 'homeownerProfile'
-        },
-        role:{
-            type: String,
-            default: 'homeowner'
         }
     }
 );
 
+homeownerAccountSchema.pre('save', function(next){
+    if (!this.isModified('password')) return next();
+    this.password = crypto.pbkdf2Sync(this.password, this.salt, 310000, 32, 'sha256').toString('hex');
+    next();
+})
 homeownerAccountSchema.set('timestamps', true);
 export default mongoose.model('homeownreAccount', homeownerAccountSchema);

@@ -66,6 +66,7 @@ function ReviewSection() {
         margin: "0 auto",
         padding: 2,
         textAlign: "center",
+        marginBottom: '50px'
       }}
     >
       <Box>

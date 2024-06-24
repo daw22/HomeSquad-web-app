@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, ButtonGroup } from "@mui/material";
 import { Login } from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom';
 
 function LogInPage() {
+  const [role, setRole] = useState("Homeowner");
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -19,7 +20,7 @@ function LogInPage() {
         background: "#a3a3a3",
         textAlign: "center",
         padding: 3,
-        marginTop: 4,
+        marginTop: 12,
         marginBottom: 4,
         color: "white",
         display: 'flex',
@@ -29,6 +30,28 @@ function LogInPage() {
       }}
     >
       <Typography variant="h5">Sign In</Typography>
+      <Box sx={{ display: "flex", justifyContent: "center", padding: 2 }}>
+      <ButtonGroup
+          variant="outlined"
+          disableRipple={true}
+          aria-label="roles button group"
+        >
+          <Button
+            onClick={() => setRole("Homeowner")}
+            variant={role === "Homeowner" ? "contained" : "outlined"}
+            sx={{ color: "white" }}
+          >
+            Homeowner
+          </Button>
+          <Button
+            onClick={() => setRole("Worker")}
+            variant={role === "Worker" ? "contained" : "outlined"}
+            sx={{ color: "white" }}
+          >
+            Worker
+          </Button>
+        </ButtonGroup>
+      </Box>
       <TextField
         required
         id="username-input"
@@ -68,6 +91,7 @@ function LogInPage() {
       </Button>
       <Typography
               variant="body2"
+              onClick={()=> navigate('/signup')}
               sx={{
                 cursor: "pointer",
                 fontStyle: "italic",

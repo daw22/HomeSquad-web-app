@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import PrivateRoutes from "./components/privateRoutes.jsx";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -23,11 +25,13 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route element={<Layout />}>
-            {/* <HomePage /> */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LogInPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LogInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route element={<PrivateRoutes />}>
+            <Route element={<Layout />}>
+              <Route path="./profile" element={<ProfilePage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -3,9 +3,11 @@ import api from './api/index.js';
 import cors from 'cors'
 import dotenv from 'dotenv';
 import { connectDB } from './libs/utils.js'
+import accountRoutes from './routes/index.js';
 
 //configure dotenv
 dotenv.config()
+console.log(process.env.DB_URI)
 //connect to DB
 await connectDB();
 //set port number
@@ -16,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 //routes
+app.use('/', accountRoutes);
 app.use('/api', api);
 
 

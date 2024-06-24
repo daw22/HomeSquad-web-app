@@ -8,6 +8,8 @@ function FooterSection() {
         padding: '15px 40px',
         background: 'black',
         color: 'white',
+        justifyContent: 'flex-end',
+        marginTop: 'auto'
     }}>
         <Box
         sx={{

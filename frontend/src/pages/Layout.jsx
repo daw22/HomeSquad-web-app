@@ -5,7 +5,14 @@ import FooterSection from '../components/footerSection.jsx';
 
 function Layout() {
   return (
-    <Box width='100%' sx={{background:'#f7f7f7'}}>
+    <Box 
+    width='100%' 
+    sx={{
+      background:'#f7f7f7',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+      }}>
         <NavBar />
         <Outlet />
         <FooterSection />

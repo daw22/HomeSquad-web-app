@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Box,
   Typography,
@@ -10,6 +10,8 @@ import {
   FormControl,
   InputLabel
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../context/userContext";
 
 function SignUpPage() {
   const [role, setRole] = useState("Homeowner");
@@ -20,11 +22,37 @@ function SignUpPage() {
   const [password, setPassword] = useState("");
   const [category, setCategory] = useState("Plumber");
   const [workDescription, setWorkDescription] = useState("");
+  const navigate = useNavigate();
+  const data = useContext(userContext);
 
   function handleSelectChange(e){
     setCategory(e.target.value);
   }
-  function submitForm() {}
+  async function submitForm() {
+    const data = {
+      "userName": userName,
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "password": password,
+      "jobCategory": category,
+      "jobDescription": workDescription 
+    }
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) 
+    };
+    const response = await fetch('http://localhost:5000/signup/worker', options);
+    //get newly created profile after signup
+    const user = response.json;
+    user.role = 'worker';
+    data.setUser(user);
+    navigate('/profile');
+    console.log(user);
+  }
   return (
     <Box
       sx={{
@@ -41,10 +69,11 @@ function SignUpPage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        borderRadius: '10px'
       }}
     >
-      <Typography variant="h5">Sign Up</Typography>
-      <Box sx={{ display: "flex", justifyContent: "center", padding: 2 }}>
+      <Typography variant="h5">Sign Up For <Typography color='primary' variant='h3'>HomeSquad</Typography></Typography>
+      <Box sx={{ display: "flex", justifyContent: "center", padding: 2, marginTop: 4 }}>
         <ButtonGroup
           variant="outlined"
           disableRipple={true}
@@ -161,6 +190,7 @@ function SignUpPage() {
       </Button>
       <Typography
         variant="body2"
+        onClick={()=> navigate('/login')}
         sx={{
           cursor: "pointer",
           fontStyle: "italic",

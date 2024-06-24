@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
-import { generateSalt } from "../../libs/utils";
+//import { generateSalt } from "../libs/utils.js";
+import crypto from 'crypto';
 
+function generateSalt(){
+    return crypto.randomBytes(128).toString('hex');
+}
 const workerAccountSchema = new mongoose.Schema(
     {
-        username: {
+        userName: {
             type: String,
             unique: true,
             required: true
@@ -14,7 +18,7 @@ const workerAccountSchema = new mongoose.Schema(
         },
         slat : {
             type: String,
-            default: generateSalt()
+            required: true
         },
         profile:{
             type: mongoose.Types.ObjectId,
@@ -23,5 +27,12 @@ const workerAccountSchema = new mongoose.Schema(
     }
 );
 
+workerAccountSchema.pre('save', function(next){
+    this.salt = generateSalt();
+    // only run when new account is created or password is updated
+    if (!this.isModified('password')) return next();
+    this.password = crypto.pbkdf2Sync(this.password, this.salt, 310000, 32, 'sha256').toString('hex');
+    next();
+});
 workerAccountSchema.set('timestamps', true);
 export default mongoose.model('workerAccount', workerAccountSchema);

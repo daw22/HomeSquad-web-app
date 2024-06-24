@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import mongoose from 'mongoose';
 
-export function generateSlat(){
+export function generateSalt(){
     return crypto.randomBytes(128).toString('hex');
 }
 

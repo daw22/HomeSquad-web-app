@@ -3,11 +3,11 @@ import React, { useState } from "react";
 export const userContext = React.createContext();
 
 const UserContextProvider = ({children}) => {
-    const [logedIn, setLogedIn] = useState(false);
+    const [user, setUser] = useState(null);
 
     const data = {
-        logedIn, 
-        setLogedIn
+        user,
+        setUser
     };
     
     return <userContext.Provider value={data}>
