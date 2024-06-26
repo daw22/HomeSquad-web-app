@@ -7,17 +7,25 @@ import { useNavigate } from "react-router-dom";
 function NavBar() {
   const status = useContext(userContext);
   const navigate = useNavigate();
+
+  async function logout() {
+    const response = await fetch("http://localhost:5000/logout");
+    if (!response.ok) return;
+    status.setUser(null);
+    navigate("/");
+  }
   return (
     <AppBar sx={{ position: "static" }}>
       <Toolbar>
         <FlexBetween width="100%">
           {/* Left side */}
           <Box>
-            <Typography variant="h5">HomeSquad</Typography>
+            <Typography variant="h5" onClick={()=> navigate('/')}>HomeSquad</Typography>
           </Box>
           {/* right side */}
-          {!status.logedIn && (
-            <Box width="30%" display="flex" justifyContent="space-around">
+          
+            {!status.user ? (
+              <Box width="30%" display="flex" justifyContent="space-around">
               <Button
                 variant="text"
                 onClick={() => navigate("/login")}
@@ -25,21 +33,19 @@ function NavBar() {
               >
                 Log In
               </Button>
-              <Button 
-              variant="text" 
-              onClick={()=> navigate('/signup')}
-              sx={{ color: "white" }}>
-                Sign Up
-              </Button>
+              <Button
+              variant="text"
+              onClick={() => navigate("/signup")}
+              sx={{ color: "white" }}
+            >
+              Sign Up
+            </Button>
             </Box>
-          )}
-          {status.logedIn && (
-            <Box width="30%" display="flex" justifyContent="space-around">
-              <Button vatiant="text" sx={{ color: "white" }}>
+            ) : (
+              <Button variant="text" onClick={logout} sx={{ color: "white" }}>
                 Log Out
               </Button>
-            </Box>
-          )}
+            )}
         </FlexBetween>
       </Toolbar>
     </AppBar>

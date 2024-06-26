@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { generateSalt } from '../libs/utils.js';
+import crypto from 'crypto';
 
 const homeownerAccountSchema = new mongoose.Schema(
     {
@@ -12,9 +12,8 @@ const homeownerAccountSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        slat : {
+        salt : {
             type: String,
-            default: generateSalt()
         },
         profile:{
             type: mongoose.Types.ObjectId,
@@ -24,9 +23,12 @@ const homeownerAccountSchema = new mongoose.Schema(
 );
 
 homeownerAccountSchema.pre('save', function(next){
+    //genearate salt
+    this.salt = crypto.randomBytes(128).toString('hex');
+    // only run when new account is created or password is updated
     if (!this.isModified('password')) return next();
     this.password = crypto.pbkdf2Sync(this.password, this.salt, 310000, 32, 'sha256').toString('hex');
     next();
-})
+});
 homeownerAccountSchema.set('timestamps', true);
 export default mongoose.model('homeownreAccount', homeownerAccountSchema);

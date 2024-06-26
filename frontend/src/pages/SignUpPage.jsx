@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
 
 function SignUpPage() {
-  const [role, setRole] = useState("Homeowner");
+  const [role, setRole] = useState("homeowner");
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,20 +23,20 @@ function SignUpPage() {
   const [category, setCategory] = useState("Plumber");
   const [workDescription, setWorkDescription] = useState("");
   const navigate = useNavigate();
-  const data = useContext(userContext);
+  const userData = useContext(userContext);
 
   function handleSelectChange(e){
     setCategory(e.target.value);
   }
   async function submitForm() {
     const data = {
-      "userName": userName,
+      "username": userName,
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
-      "password": password,
-      "jobCategory": category,
-      "jobDescription": workDescription 
+      "password": password
+      // "jobCategory": category,
+      // "jobDescription": workDescription 
     }
     const options = {
       method: 'POST',
@@ -45,12 +45,13 @@ function SignUpPage() {
       },
       body: JSON.stringify(data) 
     };
-    const response = await fetch('http://localhost:5000/signup/worker', options);
+    const response = await fetch(`http://localhost:5000/signup/${role}`, options);
     //get newly created profile after signup
-    const user = response.json;
-    user.role = 'worker';
-    data.setUser(user);
-    navigate('/profile');
+    const user = response.json();
+    user.role = role;
+    console.log(user);
+    userData.setUser(user);
+    //navigate('/login');
     console.log(user);
   }
   return (
@@ -72,7 +73,8 @@ function SignUpPage() {
         borderRadius: '10px'
       }}
     >
-      <Typography variant="h5">Sign Up For <Typography color='primary' variant='h3'>HomeSquad</Typography></Typography>
+      <Typography variant="h5">Sign Up For </Typography>
+      <Typography color='primary' variant='h3'>HomeSquad</Typography>
       <Box sx={{ display: "flex", justifyContent: "center", padding: 2, marginTop: 4 }}>
         <ButtonGroup
           variant="outlined"
@@ -80,8 +82,8 @@ function SignUpPage() {
           aria-label="roles button group"
         >
           <Button
-            onClick={() => setRole("Homeowner")}
-            variant={role === "Homeowner" ? "contained" : "outlined"}
+            onClick={() => setRole("homeowner")}
+            variant={role === "homeowner" ? "contained" : "outlined"}
             sx={{ color: "white" }}
           >
             Homeowner

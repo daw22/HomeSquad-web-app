@@ -1,16 +1,48 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Box, Typography, TextField, Button, ButtonGroup } from "@mui/material";
 import { Login } from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom';
+import { userContext } from "../context/userContext";
 
 function LogInPage() {
   const [role, setRole] = useState("Homeowner");
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-  
-  function submitForm() {}
+  const ctx = useContext(userContext);
+
+  async function submitForm() {
+    console.log("login as "+ role);
+    setErrorMessage(null);
+    if (!userName){
+      setErrorMessage('username missing!');
+      return;
+    }
+    if (!password){
+      setErrorMessage('password missing!');
+      return;
+    }
+    const data = {
+      username: userName,
+      password,
+      role
+    }
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) 
+    };
+    const response = await fetch(`http://localhost:5000/login/${role}`, options);
+    if (!response.ok){
+      setErrorMessage('Authentication failed!');
+      return;
+    }
+    ctx.setUser(await response.json());
+    navigate('/profile');
+  }
   return (
     <Box
       sx={{
@@ -74,9 +106,9 @@ function LogInPage() {
       <Typography
         variant="body2"
         color="error"
-        sx={{ display: showErrorMessage ? "block" : "none" }}
+        sx={{ display: errorMessage ? "block" : "none" }}
       >
-        Invalid username or password
+        {errorMessage}
       </Typography>
       <Button
         variant="filed"

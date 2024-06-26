@@ -30,7 +30,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route element={<PrivateRoutes />}>
             <Route element={<Layout />}>
-              <Route path="./profile" element={<ProfilePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
             </Route>
           </Route>
         </Routes>
