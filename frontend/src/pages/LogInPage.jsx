@@ -3,9 +3,10 @@ import { Box, Typography, TextField, Button, ButtonGroup } from "@mui/material";
 import { Login } from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom';
 import { userContext } from "../context/userContext";
+import instance from '../axios.js';
 
 function LogInPage() {
-  const [role, setRole] = useState("Homeowner");
+  const [role, setRole] = useState("homeowner");
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -35,13 +36,15 @@ function LogInPage() {
       },
       body: JSON.stringify(data) 
     };
-    const response = await fetch(`http://localhost:5000/login/${role}`, options);
-    if (!response.ok){
-      setErrorMessage('Authentication failed!');
-      return;
-    }
-    ctx.setUser(await response.json());
-    navigate('/profile');
+    // const response = await fetch(`http://localhost:5000/login/${role}`, options);
+    // if (!response.ok){
+    //   setErrorMessage('Authentication failed!');
+    //   return;
+    // }
+    const response = await instance.post(`http://localhost:5000/login/${role}`, data);
+    ctx.setUser(response.data);
+    ctx.setRole(role);
+    navigate('/dashboard');
   }
   return (
     <Box
@@ -69,15 +72,15 @@ function LogInPage() {
           aria-label="roles button group"
         >
           <Button
-            onClick={() => setRole("Homeowner")}
-            variant={role === "Homeowner" ? "contained" : "outlined"}
+            onClick={() => setRole("homeowner")}
+            variant={role === "homeowner" ? "contained" : "outlined"}
             sx={{ color: "white" }}
           >
             Homeowner
           </Button>
           <Button
-            onClick={() => setRole("Worker")}
-            variant={role === "Worker" ? "contained" : "outlined"}
+            onClick={() => setRole("worker")}
+            variant={role === "worker" ? "contained" : "outlined"}
             sx={{ color: "white" }}
           >
             Worker

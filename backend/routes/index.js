@@ -4,7 +4,6 @@ import workerAccount from "../models/workerAccount.js";
 import homeownerProfile from "../models/homeownerProfile.js";
 import workerProfile from "../models/workerProfile.js";
 import passport from "../libs/passport-config.js"; 
-import crypto from 'crypto';
 
 const accountRoutes = express.Router();
 
@@ -59,8 +58,10 @@ try{
 // login route for workers
 accountRoutes.post('/login/worker', passport.authenticate("worker-local"), async (req, res)=>{
   const { profile } = req.user;
-  workerProfile.findById(profile).then((user, err)=>{
-    if (err)
+  workerProfile.findOne({_id: profile})
+  .populate('address')
+  .then((user)=>{
+    if (!user)
       res.status(401).json({message: 'auth failed'});
     res.status(200).json(user);
   })
@@ -69,12 +70,15 @@ accountRoutes.post('/login/worker', passport.authenticate("worker-local"), async
 // login route for homeowners
 accountRoutes.post('/login/homeowner', passport.authenticate("homeowner-local"), (req, res)=>{
   const { profile } = req.user;
-  homeownerProfile.findById(profile).then((user, err)=>{
-    if (err)
+  homeownerProfile.findOne({_id: profile})
+  .populate('address')
+  .then((user)=>{
+    if (!user)
       res.status(401).json({message: 'auth failed'});
     res.status(201).json(user);
   });
-})
+});
+
 accountRoutes.get('/logout', (req, res)=>{
   if (!req.user) res.status(400);
   req.logout((err) => {

@@ -34,9 +34,9 @@ function SignUpPage() {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
-      "password": password
-      // "jobCategory": category,
-      // "jobDescription": workDescription 
+      "password": password,
+      "jobCategory": category,
+      "jobDescription": workDescription 
     }
     const options = {
       method: 'POST',
@@ -47,11 +47,11 @@ function SignUpPage() {
     };
     const response = await fetch(`http://localhost:5000/signup/${role}`, options);
     //get newly created profile after signup
-    const user = response.json();
+    const user = await response.json();
     user.role = role;
     console.log(user);
     userData.setUser(user);
-    //navigate('/login');
+    navigate('/login');
     console.log(user);
   }
   return (

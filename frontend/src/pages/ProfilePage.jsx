@@ -1,8 +1,71 @@
 import { useState, useContext } from "react";
-import { Button, Avatar, Box, Typography } from "@mui/material";
-import { userContext } from '../context/userContext.jsx';
+import {
+  Button,
+  Avatar,
+  Box,
+  Typography,
+  Icon,
+  IconButton,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import { userContext } from "../context/userContext.jsx";
+import EditModal from "../components/editModal.jsx";
+
 function ProfilePage() {
-  const user = useContext(userContext).user;
+  const ctx = useContext(userContext);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  console.log(ctx.user);
+
+  function launchEditor(data) {
+    setModalData(data);
+    setOpenModal(true);
+  }
+  const InfoBox = ({ data }) => {
+    return (
+      <Box
+        sx={{
+          border: "1px solid #cfcfcf",
+          padding: "10px 20px",
+          margin: "30px 0",
+          width: "50%",
+          position: "relative",
+        }}
+      >
+        <Typography variant="h5" color="text.primary">
+          {data.title}
+        </Typography>
+
+        {data.items.map((item) => {
+          return (
+            <Box
+              sx={{ display: "flex", alignItems: "center", gap: 2 }}
+              key={item.title}
+            >
+              {item.title && (
+                <Typography variant="h6" color="text.secondary">
+                  {item.title}:
+                </Typography>
+              )}
+              {item.value && (
+                <Typography variant="body1" color="text.secondary">
+                  {item.value}
+                </Typography>
+              )}
+            </Box>
+          );
+        })}
+        <Icon sx={{ position: "absolute", top: "10px", right: "30px" }}>
+          <IconButton
+            onClick={() => launchEditor(data)}
+            sx={{ width: "10px", height: "10px" }}
+          >
+            <EditIcon />
+          </IconButton>
+        </Icon>
+      </Box>
+    );
+  };
   return (
     <Box
       sx={{
@@ -10,10 +73,17 @@ function ProfilePage() {
         padding: 2,
         display: "flex",
         justifyContent: "center",
-        minHeight: '100vh',
-        border: '1px solid red'
+        minHeight: "100vh",
       }}
     >
+      {/** Modal */}
+      {openModal && (
+        <EditModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          data={modalData}
+        />
+      )}
       {/** left side */}
       <Box
         sx={{
@@ -31,34 +101,83 @@ function ProfilePage() {
           src=""
           alt=""
         />
-        <Typography variant="h6" sx={{ color: 'primary', textAlign: 'center' }}>
-          {user.firstName} {user.lastName}
+        <Typography variant="h6" sx={{ color: "primary", textAlign: "center" }}>
+          {ctx.user.firstName} {ctx.user.lastName}
         </Typography>
         <Box
-        sx={{
-            marginTop: '50px',
-            textAlign: 'center'
-        }}>
-            <Button variant='text' sx={{width: '80%'}}>Address</Button>
-            <Button variant='text' sx={{width: '80%'}}>Hires</Button>
-            {user.role === 'worker' && <>
-                <Button variant='text' sx={{width: '80%'}}>Job Offers</Button>
-                <Button variant='text' sx={{width: '80%'}}>Job Description</Button>
-            </>}
-            {user.role === 'homeowner' && <>
-                <Button variant='text' sx={{width: '80%'}}>Offered Jobs</Button>
-                <Button variant='text' sx={{width: '80%'}}>Favorite Workers</Button>
-                <Button variant='text' sx={{width: '80%'}}>Posted Jobs</Button>
-            </>}
-            <Button variant='text' sx={{width: '80%'}}>Bio</Button>
+          sx={{
+            marginTop: "50px",
+            textAlign: "center",
+          }}
+        >
+          <Button variant="text" sx={{ width: "80%" }}>
+            Hire History
+          </Button>
+          {ctx.role === "worker" && (
+            <>
+              <Button variant="text" sx={{ width: "80%" }}>
+                Job Offers
+              </Button>
+            </>
+          )}
+          {ctx.role === "homeowner" && (
+            <>
+              <Button variant="text" sx={{ width: "80%" }}>
+                Offered Jobs
+              </Button>
+              <Button variant="text" sx={{ width: "80%" }}>
+                Favorite Workers
+              </Button>
+              <Button variant="text" sx={{ width: "80%" }}>
+                Posted Jobs
+              </Button>
+            </>
+          )}
         </Box>
-        
       </Box>
       {/** right side */}
       <Box
-      sx={{
-        width: '70%'
-      }}></Box>
+        sx={{
+          width: "70%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          paddingTop: "30px",
+        }}
+      >
+        <InfoBox
+          data={{
+            title: "Address",
+            items:  [
+              { title: "country", value: ctx.user.address ? ctx.user.address.country : '' },
+              { title: "city", value: ctx.user.address ? ctx.user.address.city : '' },
+              { title: "street", value: ctx.user.address ? ctx.user.address.streetName : ''},
+              { title: "houseNumber", value: ctx.user.address ? ctx.user.address.houseNumber : '' },
+              {
+                title: "GeoLocation",
+                value: ctx.user.address ? ctx.user.address.location.coordinates : '',
+              },
+            ]
+          }}
+        />
+        {ctx.role === "worker" && (
+          <InfoBox
+            data={{
+              title: "Job Description",
+              items: [
+                { title: "Category", value: ctx.user.jobCategory },
+                { title: "About service", value: ctx.user.jobDescription },
+              ],
+            }}
+          />
+        )}
+        <InfoBox
+          data={{
+            title: "About Me",
+            items: [{ title: 'aboutme', value: ctx.user.aboutYourSelf }],
+          }}
+        />
+      </Box>
     </Box>
   );
 }

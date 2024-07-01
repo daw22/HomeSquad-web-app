@@ -4,10 +4,13 @@ export const userContext = React.createContext();
 
 const UserContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
+    const [role, setRole] = useState('');
 
     const data = {
         user,
-        setUser
+        setUser,
+        role,
+        setRole
     };
     
     return <userContext.Provider value={data}>

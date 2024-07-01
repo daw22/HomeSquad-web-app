@@ -3,6 +3,7 @@ import { userContext } from "./context/userContext.jsx";
 import Layout from "./pages/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
@@ -22,7 +23,7 @@ function App() {
     status.setLogedIn(!status.logedIn);
   }
   return (
-    <>
+    <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -30,12 +31,13 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route element={<PrivateRoutes />}>
             <Route element={<Layout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

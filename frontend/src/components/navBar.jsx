@@ -20,12 +20,14 @@ function NavBar() {
         <FlexBetween width="100%">
           {/* Left side */}
           <Box>
-            <Typography variant="h5" onClick={()=> navigate('/')}>HomeSquad</Typography>
+            <Typography variant="h5" onClick={() => navigate("/")}>
+              HomeSquad
+            </Typography>
           </Box>
           {/* right side */}
-          
-            {!status.user ? (
-              <Box width="30%" display="flex" justifyContent="space-around">
+
+          {!status.user ? (
+            <Box width="30%" display="flex" justifyContent="space-around">
               <Button
                 variant="text"
                 onClick={() => navigate("/login")}
@@ -34,18 +36,26 @@ function NavBar() {
                 Log In
               </Button>
               <Button
-              variant="text"
-              onClick={() => navigate("/signup")}
-              sx={{ color: "white" }}
-            >
-              Sign Up
-            </Button>
+                variant="text"
+                onClick={() => navigate("/signup")}
+                sx={{ color: "white" }}
+              >
+                Sign Up
+              </Button>
             </Box>
-            ) : (
-              <Button variant="text" onClick={logout} sx={{ color: "white" }}>
+          ) : (
+            <Box>
+              <Button variant="text" onClick={()=> navigate('/profile')} sx={{ color: "white" }}>
+                Profile
+              </Button>
+              <Button variant="text" onClick={()=> navigate('/dashboard')} sx={{ color: "white" }}>
+                Dashboard
+              </Button>
+              <Button variant="text"  onClick={logout} sx={{ color: "white" }}>
                 Log Out
               </Button>
-            )}
+            </Box>
+          )}
         </FlexBetween>
       </Toolbar>
     </AppBar>

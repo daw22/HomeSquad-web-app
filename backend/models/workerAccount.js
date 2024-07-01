@@ -18,6 +18,10 @@ const workerAccountSchema = new mongoose.Schema(
         profile:{
             type: mongoose.Types.ObjectId,
             ref: 'workerProfile'
+        },
+        role: {
+            type: String,
+            default: 'worker'
         }
     }
 );

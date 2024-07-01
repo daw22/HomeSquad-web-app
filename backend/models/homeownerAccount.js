@@ -18,6 +18,10 @@ const homeownerAccountSchema = new mongoose.Schema(
         profile:{
             type: mongoose.Types.ObjectId,
             ref: 'homeownerProfile'
+        },
+        role: {
+            type: String,
+            default: 'homeowner'
         }
     }
 );
@@ -31,4 +35,4 @@ homeownerAccountSchema.pre('save', function(next){
     next();
 });
 homeownerAccountSchema.set('timestamps', true);
-export default mongoose.model('homeownreAccount', homeownerAccountSchema);
+export default mongoose.model('homeownerAccount', homeownerAccountSchema);

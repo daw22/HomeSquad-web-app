@@ -8,8 +8,6 @@ function verifyPassword(password, user) {
   const hashedPassword = crypto
     .pbkdf2Sync(password, user.salt, 310000, 32, "sha256")
     .toString("hex");
-  console.log("hasedPassword: ", hashedPassword);
-  console.log("user password: ", user.password);
   return hashedPassword === user.password;
 }
 
@@ -26,7 +24,7 @@ passport.use(
             const verified = verifyPassword(password, user);
             if (!verified)
               return done(err, false, { message: "wrong password" });
-            return done(null, user, {strategy: 'worker-local'});
+            return done(null, user);
           })
           .catch((err) => done(err));
       }
@@ -46,7 +44,7 @@ passport.use(
             const verified = verifyPassword(password, user);
             if (!verified)
               return done(err, false, { message: "wrong password" });
-            return done(null, user, {strategy: 'homeowner-local'});
+            return done(null, user);
           })
           .catch((err) => done(err));
       } 
@@ -54,22 +52,23 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, {user, strategy: user.strategy});
+  console.log(user);
+  done(null, user);
 });
 
 passport.deserializeUser((data, done) => {
-  console.log('SUBSEQUENT REQUEST!!!!');
-  if (data.starategy === 'worker-local'){
+  console.log('data:', data);
+  if (data.role === 'worker'){
     workerAccount
-    .findById(data.user._id)
+    .findById(data._id)
     .then((user) => {
       done(null, user);
     })
-    .catch((err) => done(err));
+    .catch((err) => done(err)); 
   }
-  if (data.strategy === 'homeowner-local'){
+  if (data.role === 'homeowner'){
     homeownerAccount
-    .findById(data.user._id)
+    .findById(data._id)
     .then((user) => {
       done(null, user);
     })
