@@ -36,12 +36,7 @@ function LogInPage() {
       },
       body: JSON.stringify(data) 
     };
-    // const response = await fetch(`http://localhost:5000/login/${role}`, options);
-    // if (!response.ok){
-    //   setErrorMessage('Authentication failed!');
-    //   return;
-    // }
-    const response = await instance.post(`http://localhost:5000/login/${role}`, data);
+    const response = await instance.post(`/login/${role}`, data);
     ctx.setUser(response.data);
     ctx.setRole(role);
     navigate('/dashboard');

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
+import instance from "../axios";
 
 function SignUpPage() {
   const [role, setRole] = useState("homeowner");
@@ -38,21 +39,21 @@ function SignUpPage() {
       "jobCategory": category,
       "jobDescription": workDescription 
     }
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data) 
-    };
-    const response = await fetch(`http://localhost:5000/signup/${role}`, options);
+    // const options = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(data) 
+    // };
+    // const response = await fetch(`http://localhost:5000/signup/${role}`, options);
+    const resp = await instance.post(`/signup/${role}`, data);
     //get newly created profile after signup
-    const user = await response.json();
+    const user = await resp.data;
     user.role = role;
     console.log(user);
     userData.setUser(user);
     navigate('/login');
-    console.log(user);
   }
   return (
     <Box
