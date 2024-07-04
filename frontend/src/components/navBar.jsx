@@ -20,7 +20,11 @@ function NavBar() {
         <FlexBetween width="100%">
           {/* Left side */}
           <Box>
-            <Typography variant="h5" onClick={() => navigate("/")}>
+            <Typography variant="h5" onClick={() => {
+                if (status.user) navigate("/dashboard");
+                else navigate("/")
+              }
+              }>
               HomeSquad
             </Typography>
           </Box>

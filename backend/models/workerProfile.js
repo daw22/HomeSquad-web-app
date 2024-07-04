@@ -1,5 +1,29 @@
 import mongoose from 'mongoose';
 
+const address = new mongoose.Schema(
+    {
+        country: {
+            type: String,
+            required: true,
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        streetName: {
+            type: String,
+        },
+        location :{
+            type: { type: String, default: 'Point' }, //geoSpatial point
+            coordinates: [Number] //[longitude, latitude] in this order
+        },
+        houseNumber: {
+            type: String
+        }
+    }
+);
+address.index({ 'location': '2dsphere' });
+
 const workerProfileSchema = new mongoose.Schema(
     {
         firstName: {
@@ -20,7 +44,7 @@ const workerProfileSchema = new mongoose.Schema(
         },
         profilePic: {
             type: String,
-            defuault: "",
+            default: "",
         },
         aboutYourSelf: {
             type: String,
@@ -40,8 +64,7 @@ const workerProfileSchema = new mongoose.Schema(
             default: []
        },
        address: {
-            type: mongoose.Types.ObjectId,
-            ref: 'address' 
+            type: address
        },
        jobCategory: {
             type: String,

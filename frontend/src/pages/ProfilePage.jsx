@@ -7,7 +7,7 @@ import {
   Icon,
   IconButton,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Edit } from '@mui/icons-material';
 import { userContext } from "../context/userContext.jsx";
 import EditModal from "../components/editModal.jsx";
 
@@ -60,7 +60,7 @@ function ProfilePage() {
             onClick={() => launchEditor(data)}
             sx={{ width: "10px", height: "10px" }}
           >
-            <EditIcon />
+            <Edit />
           </IconButton>
         </Icon>
       </Box>
@@ -91,16 +91,36 @@ function ProfilePage() {
           borderRight: "4px solid #cfcfcf",
         }}
       >
-        <Avatar
+        <Box
           sx={{
+            position: "relative",
             width: "100px",
-            height: "100px",
-            margin: "0 auto",
-            marginBottom: 2,
+              height: "100px",
+              margin: '0 auto',
+              marginBottom: '20px'
           }}
-          src=""
-          alt=""
-        />
+        >
+          <Avatar
+            sx={{
+              width: "100px",
+              height: "100px",
+              marginBottom: 2,
+            }}
+            src={ctx.user.proilePic}
+            alt={ctx.user.firstName}
+          />
+          <IconButton
+            sx={{
+              position: "absolute",
+              bottom: -10
+            }}
+            onClick={() => {
+              
+            }}
+          >
+            <Edit />
+          </IconButton>
+        </Box>
         <Typography variant="h6" sx={{ color: "primary", textAlign: "center" }}>
           {ctx.user.firstName} {ctx.user.lastName}
         </Typography>
@@ -148,16 +168,30 @@ function ProfilePage() {
         <InfoBox
           data={{
             title: "Address",
-            items:  [
-              { title: "country", value: ctx.user.address ? ctx.user.address.country : '' },
-              { title: "city", value: ctx.user.address ? ctx.user.address.city : '' },
-              { title: "street", value: ctx.user.address ? ctx.user.address.streetName : ''},
-              { title: "houseNumber", value: ctx.user.address ? ctx.user.address.houseNumber : '' },
+            items: [
+              {
+                title: "country",
+                value: ctx.user.address ? ctx.user.address.country : "",
+              },
+              {
+                title: "city",
+                value: ctx.user.address ? ctx.user.address.city : "",
+              },
+              {
+                title: "street",
+                value: ctx.user.address ? ctx.user.address.streetName : "",
+              },
+              {
+                title: "houseNumber",
+                value: ctx.user.address ? ctx.user.address.houseNumber : "",
+              },
               {
                 title: "GeoLocation",
-                value: ctx.user.address ? ctx.user.address.location.coordinates : '',
+                value: ctx.user.address
+                  ? ctx.user.address.location.coordinates
+                  : "",
               },
-            ]
+            ],
           }}
         />
         {ctx.role === "worker" && (
@@ -166,7 +200,7 @@ function ProfilePage() {
               title: "Job Description",
               items: [
                 { title: "Category", value: ctx.user.jobCategory },
-                { title: "About service", value: ctx.user.jobDescription },
+                { title: "Detail", value: ctx.user.jobDescription },
               ],
             }}
           />
@@ -174,7 +208,7 @@ function ProfilePage() {
         <InfoBox
           data={{
             title: "About Me",
-            items: [{ title: 'aboutme', value: ctx.user.aboutYourSelf }],
+            items: [{ title: "aboutme", value: ctx.user.aboutYourSelf }],
           }}
         />
       </Box>

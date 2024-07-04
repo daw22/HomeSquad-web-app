@@ -57,7 +57,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((data, done) => {
-  console.log('data:', data);
   if (data.role === 'worker'){
     workerAccount
     .findById(data._id)

@@ -12,12 +12,11 @@ const jobOfferSchema = new mongoose.Schema(
             required: true
         },
         budget: {
-            type: number,
+            type: Number,
             required: true
         },
-        pictures: {
-            type: [String],
-            default: []
+        picture: {
+            type: String,
         },
         worker: {
             type: mongoose.Types.ObjectId,

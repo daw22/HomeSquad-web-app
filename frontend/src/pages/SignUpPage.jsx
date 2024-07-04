@@ -164,6 +164,7 @@ function SignUpPage() {
               <MenuItem value="Furniture">Furniture</MenuItem>
               <MenuItem value="Cleaning">Cleaning</MenuItem>
               <MenuItem value="Electrician">Electrician</MenuItem>
+              <MenuItem value="Construction">Construction</MenuItem>
               <MenuItem value="Gardening">Gardening</MenuItem>
               <MenuItem value="Paint">Paint</MenuItem>
               <MenuItem value="Satellite_dish">Satellite Dish</MenuItem>

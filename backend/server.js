@@ -7,6 +7,7 @@ import MongoDBStore from 'connect-mongo';
 import passport from 'passport';
 import { connectDB } from './libs/utils.js'
 import accountRoutes from './routes/index.js';
+import searchRoutes from './routes/searchRoutes.js';
 
 //configure dotenv
 dotenv.config()
@@ -43,5 +44,6 @@ app.use(passport.session());
 //routes
 app.use('/', accountRoutes);
 app.use('/api', api);
+app.use('/search', searchRoutes);
 
 app.listen(PORT, ()=> console.log('server running on port 5000'));

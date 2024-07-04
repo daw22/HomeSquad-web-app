@@ -20,12 +20,11 @@ const jobPostingSchema = new mongoose.Schema(
             required: true
         },
         budget: {
-            type: number,
+            type: Number,
             required: true
         },
-        pictures: {
-            type: [String],
-            default: []
+        picture: {
+            type: String
         },
         bids: {
             type: [mongoose.Types.ObjectId],

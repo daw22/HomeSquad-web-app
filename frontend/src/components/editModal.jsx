@@ -16,6 +16,7 @@ function EditModal({ data, openModal, setOpenModal }) {
 
   function updateState(e, data){
     setEditData({...editData, [data.title]: e.target.value});
+    console.log('edited:', editData)
   }
 
   async function saveCahnges(title){
@@ -30,29 +31,20 @@ function EditModal({ data, openModal, setOpenModal }) {
         streetName: editData.street,
         location: editData.GeoLocation
       }
-      console.log('address to save:', data)
     }
     if (title === 'About Me'){
-      url = 'http://localhost:5000/api/profile/edit-aboutme';
+      url = 'api/profile/edit-aboutme';
       data ={
         aboutme: editData.aboutme
       }
-      console.log('about me to save:', data)
     }
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin',
-      body: JSON.stringify(data) 
-    };
-    // const response = await fetch(url, options);
-    // if(response.ok){
-    //   ctx.setUser(await response.json());
-    //   console.log(ctx.user)
-    //   setOpenModal(false);
-    // }
+    if (title === 'Job Description'){
+      url = '/api/profile/edit-job';
+      data= {
+        Category: editData.Category,
+        Detail: editData.Detail
+      }
+    }
     const response = await instance.post(url, data);
     console.log('resp:', response.data);
     ctx.setUser(response.data);
