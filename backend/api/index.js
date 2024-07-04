@@ -8,12 +8,13 @@ const isAuthenticated = (req, res, next)=>{
     else next();
 }
 
-api.use(isAuthenticated);
-api.use('/profile', profileRouter);
-api.use('/job', jobRoutes);
 api.get('/status', (req, res) => {
     res.status(200).json({"status": "200"});
 });
+api.use(isAuthenticated);
+api.use('/profile', profileRouter);
+api.use('/job', jobRoutes);
+
 
 // search workers
 // search jobs
