@@ -9,7 +9,8 @@ import {
   Select,
   MenuItem,
   Avatar,
-  Rating
+  Rating,
+  CircularProgress,
 } from "@mui/material";
 import ProfileModal from "../components/profileModal.jsx";
 import { userContext } from "../context/userContext.jsx";
@@ -25,6 +26,8 @@ function HandimanSearch() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [results, setResults] = useState([]);
+  // search state
+  const [searching, setSearching] = useState(false);
   // modal state
   const [openProfileModal, setOpenProfileModal] = useState(false);
   const [openOfferModal, setOpenOfferModal] = useState(false);
@@ -58,6 +61,7 @@ function HandimanSearch() {
     );
   }
   async function search() {
+    setSearching(true);
     const filter = {
       firstName,
       lastName,
@@ -67,6 +71,7 @@ function HandimanSearch() {
     console.log("filter:", filter);
     const response = await instance.post("/search/handiman", filter);
     setResults(response.data);
+    setSearching(false);
     console.log("resp:", response.data);
     console.log(results);
   }
@@ -154,85 +159,98 @@ function HandimanSearch() {
           Search
         </Button>
       </Box>
-      <Box sx={{ marginTop: "40px" }}>
-        {results.length == 0 && (
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "40vh",
-            }}
-          >
-            <Typography variant="h6" color="text.secondary">
-              Nothing Found
-            </Typography>
-          </Box>
-        )}
-        {results.map((result, index) => {
-          return (
+      {searching ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "40vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box sx={{ marginTop: "40px" }}>
+          {results.length == 0 && (
             <Box
-              key={index}
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
-                p: 2,
-                background: "#cfcfcf",
-                marginTop: "5px",
+                justifyContent: "center",
+                marginTop: "40vh",
               }}
             >
-              <Box sx={{ display: "flex", gap: 3 }}>
-                <Avatar src={result.profilePic} alt="" />
-                <Box>
-                  <Typography variant="body1">
-                    {result.firstName} {result.lastName}
-                  </Typography>
+              <Typography variant="h6" color="text.secondary">
+                Nothing Found
+              </Typography>
+            </Box>
+          )}
+          {results.map((result, index) => {
+            return (
+              <Box
+                key={index}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  p: 2,
+                  background: "#cfcfcf",
+                  marginTop: "5px",
+                }}
+              >
+                <Box sx={{ display: "flex", gap: 3 }}>
+                  <Avatar src={result.profilePic} alt="" />
+                  <Box>
+                    <Typography variant="body1">
+                      {result.firstName} {result.lastName}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {result.jobCategory}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box sx={{ textAlign: "center" }}>
+                  <Rating
+                    name="read-only"
+                    value={result.rating}
+                    defaultValue={2.5}
+                    precision={0.5}
+                    readOnly
+                  />
                   <Typography variant="body2" color="text.secondary">
-                    {result.jobCategory}
+                    completed: {result.numberOfJobsCompleted}
                   </Typography>
                 </Box>
+                <Box sx={{ display: "flex", gap: 3 }}>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      setOpenProfileModal(true);
+                      setCurrentWorker(result);
+                    }}
+                  >
+                    Profile
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      if (!ctx.user) {
+                        navigate("/login");
+                        return;
+                      }
+                      setOpenOfferModal(true);
+                      setCurrentWorker(result);
+                    }}
+                  >
+                    Offer Job
+                  </Button>
+                </Box>
               </Box>
-              <Box sx={{ textAlign: "center" }}>
-                <Rating
-                  name="read-only"
-                  value={result.rating}
-                  defaultValue={2.5}
-                  precision={0.5}
-                  readOnly
-                />
-                <Typography variant="body2" color="text.secondary">
-                  completed: {result.numberOfJobsCompleted}
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", gap: 3 }}>
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    setOpenProfileModal(true);
-                    setCurrentWorker(result);
-                  }}
-                >
-                  Profile
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    if (!ctx.user) {
-                      navigate("/login");
-                      return;
-                    }
-                    setOpenOfferModal(true);
-                    setCurrentWorker(result);
-                  }}
-                >
-                  Offer Job
-                </Button>
-              </Box>
-            </Box>
-          );
-        })}
-      </Box>
+            );
+          })}
+        </Box>
+      )}
     </Box>
   );
 }
