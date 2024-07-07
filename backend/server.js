@@ -32,8 +32,9 @@ const sessionMiddleware = session({
     saveUninitialized: false,
     store,
     cookie:{
-        maxAge: 1000 * 60 * 60 * 24,
-        sameSite: 'none' // equals one day
+        maxAge: 1000 * 60 * 60 * 24, // equals one day
+        sameSite: 'none',
+        secure: true 
     }
 });
 app.use(sessionMiddleware);
