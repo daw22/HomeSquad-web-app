@@ -11,7 +11,6 @@ import searchRoutes from './routes/searchRoutes.js';
 
 //configure dotenv
 dotenv.config()
-console.log(process.env.DB_URI)
 //connect to DB
 await connectDB();
 //set port number
@@ -34,7 +33,6 @@ const sessionMiddleware = session({
     cookie:{
         maxAge: 1000 * 60 * 60 * 24, // equals one day
         sameSite: 'none',
-        secure: true 
     }
 });
 app.use(sessionMiddleware);
@@ -48,4 +46,4 @@ app.use('/', accountRoutes);
 app.use('/api', api);
 app.use('/search', searchRoutes);
 
-app.listen(PORT, ()=> console.log('server running on port 5000'));
+app.listen(PORT, ()=> console.log('server running.'));
