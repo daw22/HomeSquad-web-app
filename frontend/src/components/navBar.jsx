@@ -3,13 +3,14 @@ import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
 import FlexBetween from "./flexBetween.jsx";
 import { userContext } from "../context/userContext.jsx";
 import { useNavigate } from "react-router-dom";
+import instance from "../axios.js";
 
 function NavBar() {
   const status = useContext(userContext);
   const navigate = useNavigate();
 
   async function logout() {
-    const response = await fetch("http://localhost:5000/logout");
+    const response = await instance.get("/logout");
     if (!response.ok) return;
     status.setUser(null);
     navigate("/");
