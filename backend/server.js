@@ -1,4 +1,6 @@
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import api from './api/index.js';
 import cors from 'cors'
 import dotenv from 'dotenv';
@@ -17,8 +19,14 @@ await connectDB();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-app.use(cors({origin: 'https://home-squad.vercel.app', credentials: true}));
+//app.use(cors({origin: 'https://home-squad.vercel.app', credentials: true}));
+app.use(cors({origin: 'http://localhost:5000', credentials: true}));
 app.use(express.json());
+// set static path
+// static file path
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname,'dist')));
 
 //setup session middleware
 const store = MongoDBStore.create({
@@ -32,7 +40,6 @@ const sessionMiddleware = session({
     store,
     cookie:{
         maxAge: 1000 * 60 * 60 * 24, // equals one day
-        sameSite: 'none',
     }
 });
 app.use(sessionMiddleware);

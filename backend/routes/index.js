@@ -7,6 +7,10 @@ import passport from "../libs/passport-config.js";
 
 const accountRoutes = express.Router();
 
+// react app
+accountRoutes.get('/', (req, res)=>{
+  res.send('./index.html');
+})
 // signup route for workers
 accountRoutes.post("/signup/worker", async (req, res) => {
   const {

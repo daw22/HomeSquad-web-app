@@ -14,15 +14,6 @@ function App() {
   const [message, setMessage] = useState("");
   const status = useContext(userContext);
 
-  useEffect(() => {
-    fetch("https://api-homesquad.onrender.com/api/status")
-      .then((response) => response.json())
-      .then((data) => setMessage(data.status));
-  }, []);
-
-  function logInOut(e) {
-    status.setLogedIn(!status.logedIn);
-  }
   return (
     <div>
       <BrowserRouter>
