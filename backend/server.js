@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 //app.use(cors({origin: 'https://home-squad.vercel.app', credentials: true}));
-app.use(cors({origin: 'http://localhost:5000', credentials: true}));
+app.use(cors({origin: 'https://homesquad-web-app.onrender.com/', credentials: true}));
 app.use(express.json());
 // set static path
 // static file path
