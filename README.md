@@ -42,7 +42,7 @@ While working on this project (my first big full stack app) I have learned how d
 
 
 <p align="center">
-  <img alt="" [Screenshot] src="../dave/home-page.PNG"><br>
+  <img alt="" [Screenshot] src="https://ibb.co/T2Kx80S"><br>
 HomeSquad home page
 </p>
 
