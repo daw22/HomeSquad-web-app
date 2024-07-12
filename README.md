@@ -23,7 +23,7 @@
 
   ![GitHub top language](https://img.shields.io/github/languages/top/daw22/HomeSquad-web-app?style=plastic)
 
-
+Author Linkedin https://www.linkedin.com/in/dawit-yifru-692aa11a5/
 
 ## Description
 
@@ -42,7 +42,7 @@ While working on this project (my first big full stack app) I have learned how d
 
 
 <p align="center">
-  <img alt="" [Screenshot] src="https://ibb.co/T2Kx80S"><br>
+  <img alt="" [Screenshot] src="https://firebasestorage.googleapis.com/v0/b/homesquad-e26cc.appspot.com/o/home-page.PNG?alt=media&token=d4bd74d9-1f9a-409b-9dab-f2ec39943c9e"><br>
 HomeSquad home page
 </p>
 
@@ -73,31 +73,31 @@ HomeSquad is built with the following tools and libraries: <ul><li>react.js</li>
 
 ## Usage
  
-As a Hoemowner
+<h2>As a Hoemowner</h2>
 As a Homeower you can post jobs and search for a handyman using various filters and offer the a job
-To post a job
-Sign up as homeowner
-Edit your Profile (enter address and other info)
-Go to the home page fome task app and click on Post job button and fill the form
+<h3>To post a job</h3>
+- Sign up as homeowner
+- Edit your Profile (enter address and other info)
+- Go to the home page fome task app and click on Post job button and fill the form
 
-To offer job for a handyman
-While loged in to go to home
-click on offer job, you will be directed to habdy man search page
-search for a handyman and click offer job on a list item from list of handymen
-fill the for to offer a job for a selected handyman 
+<h3>To offer job for a handyman</h3>
+- While loged in to go to home
+- click on offer job, you will be directed to habdy man search page
+- search for a handyman and click offer job on a list item from list of handymen
+- fill the for to offer a job for a selected handyman 
 
-As a handyman
+<h2>As a handyman</h2>
 As a handyman you can search for jobs and bid on them, you can also recive job offers and respond to them
-to bid on a job
-while being loged in go to home
-click on find work
-search for a job and clik bid on the one you would like to bid on
-fill the form
+<h3></h3>to bid on a job</h3>
+- while being loged in go to home
+- click on find work
+- search for a job and clik bid on the one you would like to bid on
+- fill the form
  
 
 
-
-
+<H3>Related Projects</H3>
+- https://github.com/daw22/space-tourism-website
 
 
 
