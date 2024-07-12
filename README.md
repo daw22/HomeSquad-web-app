@@ -76,23 +76,23 @@ HomeSquad is built with the following tools and libraries: <ul><li>react.js</li>
 <h2>As a Hoemowner</h2>
 As a Homeower you can post jobs and search for a handyman using various filters and offer the a job
 <h3>To post a job</h3>
-- Sign up as homeowner
-- Edit your Profile (enter address and other info)
-- Go to the home page fome task app and click on Post job button and fill the form
+<li>Sign up as homeowner</li>
+<li>Edit your Profile (enter address and other info)</li>
+<li>Go to the home page fome task app and click on Post job button and fill the form</li>
 
 <h3>To offer job for a handyman</h3>
-- While loged in to go to home
-- click on offer job, you will be directed to habdy man search page
-- search for a handyman and click offer job on a list item from list of handymen
-- fill the for to offer a job for a selected handyman 
+<li>While loged in to go to home</li>
+<li>click on offer job, you will be directed to habdy man search page</li>
+<li>search for a handyman and click offer job on a list item from list of handymen</li>
+<li>fill the for to offer a job for a selected handyman </li>
 
 <h2>As a handyman</h2>
 As a handyman you can search for jobs and bid on them, you can also recive job offers and respond to them
-<h3></h3>to bid on a job</h3>
-- while being loged in go to home
-- click on find work
-- search for a job and clik bid on the one you would like to bid on
-- fill the form
+<h3>to bid on a job</h3>
+<li>while being loged in go to home</li>
+<li>click on find work</li>
+<li>search for a job and clik bid on the one you would like to bid on</li>
+<li>fill the form</li>
  
 
 
