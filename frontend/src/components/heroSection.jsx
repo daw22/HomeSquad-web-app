@@ -42,7 +42,6 @@ function HeroSection() {
           }}
         ></Box>
       ))}
-      //navigation
       <Box
         sx={{
           position: "absolute",

@@ -9,6 +9,7 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import PrivateRoutes from "./components/privateRoutes.jsx";
 import HandimanSearch from "./pages/HandimanSearch.jsx";
+import JobSearch from "./pages/JobSearch.jsx";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -23,6 +24,7 @@ function App() {
             <Route path="/login" element={<LogInPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/handiman" element={<HandimanSearch />} />
+            <Route path="/jobs" element={<JobSearch />} />
             <Route element={<PrivateRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<ProfilePage />} />

@@ -50,11 +50,11 @@ function NavBar() {
             </Box>
           ) : (
             <Box>
+              <Button variant="text" onClick={()=> navigate('/dashboard')} sx={{ color: "white" }}>
+                Home
+              </Button>
               <Button variant="text" onClick={()=> navigate('/profile')} sx={{ color: "white" }}>
                 Profile
-              </Button>
-              <Button variant="text" onClick={()=> navigate('/dashboard')} sx={{ color: "white" }}>
-                Dashboard
               </Button>
               <Button variant="text"  onClick={logout} sx={{ color: "white" }}>
                 Log Out

@@ -22,6 +22,19 @@ const jobOfferSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: 'workerProfile'
         },
+        homeowner: {
+            type: mongoose.Types.ObjectId,
+            ref: 'homeownerProfile'
+        },
+        status: {
+            type: String,
+            enum: ['PENDING', 'ACCEPTED', 'DECLINED'],
+            default: 'PENDING',
+        },
+        deadline: {
+            type: Date,
+            required: true
+        }
     }
 );
 

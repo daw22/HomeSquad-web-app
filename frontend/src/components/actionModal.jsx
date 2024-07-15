@@ -54,6 +54,7 @@ function ActionModal({ openModal, setOpenModal }) {
     const resp = await instance.post('/api/job/postjob', data);
     //console.log('post resp:', resp.data);
     setOpenModal(false);
+    ctx.setUser(resp.data);
   }
   return (
     <Modal

@@ -18,7 +18,7 @@ function ProfileModal({currentWorker, openModal, setOpenModal}) {
           minWidth: 400,
           boxShadow: 24,
           p: 4,
-          background: "#a3a3a3",
+          background: "#fff",
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',

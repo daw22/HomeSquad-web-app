@@ -1,9 +1,13 @@
 import { useState, useContext } from "react";
 import { Box, Typography, TextField, Modal, Button } from "@mui/material";
 import { userContext } from "../context/userContext.jsx";
-import instance from '../axios.js';
-import {storage} from "../firebase.js";
+import instance from "../axios.js";
+import { storage } from "../firebase.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function JobOfferModal({ currentWorker, openModal, setOpenModal }) {
   const ctx = useContext(userContext);
@@ -11,27 +15,33 @@ function JobOfferModal({ currentWorker, openModal, setOpenModal }) {
   const [jobDescription, setJobDescription] = useState("");
   const [budget, setBudget] = useState("");
   const [image, setImage] = useState(null);
+  const [deadline, setDeadline] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
 
   async function offerJob() {
     // make a job offer for a worker
     const data = {};
-    if (!(jobTitle && jobDescription && budget)){
-        alert('Fill the form to offer a job.');
-        return;
+    if (!(jobTitle && jobDescription && budget && deadline)) {
+      alert("Fill the form to offer a job.");
+      return;
     }
-    if (image != null){
-        const imageRef = ref(storage,  `joboffer/${image.name + ctx.user._id + new Date().toISOString()}`);
-        const iResp = await uploadBytes(imageRef, image);
-        const url = await getDownloadURL(iResp.ref);
-        data['picture'] = url;
-      }
-    data['worker'] = currentWorker._id;
-    data['title'] = jobTitle;
-    data['description'] = jobDescription;
-    data['budget']= budget;
-    const resp = await instance.post('/api/job/offerjob', data);
-    //console.log('offfer resp:', resp.data);
+    if (image != null) {
+      const imageRef = ref(
+        storage,
+        `joboffer/${image.name + ctx.user._id + new Date().toISOString()}`
+      );
+      const iResp = await uploadBytes(imageRef, image);
+      const url = await getDownloadURL(iResp.ref);
+      data["picture"] = url;
+    }
+    data["homeowner"] = ctx.user._id;
+    data["worker"] = currentWorker._id;
+    data["title"] = jobTitle;
+    data["description"] = jobDescription;
+    data["budget"] = budget;
+    data["deadline"] = deadline;
+    const resp = await instance.post("/api/job/offerjob", data);
+    ctx.setUser(resp.data);
     setOpenModal(false);
   }
   return (
@@ -50,7 +60,7 @@ function JobOfferModal({ currentWorker, openModal, setOpenModal }) {
           minWidth: 400,
           boxShadow: 24,
           p: 4,
-          background: "#a3a3a3",
+          background: "white",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -79,7 +89,7 @@ function JobOfferModal({ currentWorker, openModal, setOpenModal }) {
           maxRows={4}
           placeholder="job description"
           onChange={(e) => setJobDescription(e.target.value)}
-          sx={{width: '80%'}}
+          sx={{ width: "80%" }}
         />
         <TextField
           id="job-budjet-input"
@@ -87,7 +97,7 @@ function JobOfferModal({ currentWorker, openModal, setOpenModal }) {
           variant="outlined"
           placeholder="job budget in dollar"
           onChange={(e) => setBudget(e.target.value)}
-          sx={{width: '80%'}}
+          sx={{ width: "80%" }}
         />
         <TextField
           id="image-upload"
@@ -100,8 +110,13 @@ function JobOfferModal({ currentWorker, openModal, setOpenModal }) {
           }}
           error={Boolean(errorMessage)} // Set error state if an error occurs
           helperText={errorMessage} // Display error message if present
-          sx={{width: '80%'}}
+          sx={{ width: "80%" }}
         />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker label="wait response until" onChange={(value)=> setDeadline(value)}/>
+          </DemoContainer>
+        </LocalizationProvider>
         <Box>
           <Button
             variant="contained"

@@ -33,6 +33,7 @@ function Dashboard() {
             onClick={() => {
               if (action == 'post') setOpenModal(true);
               if (action == 'offer') navigate('/handiman');
+              if (action == 'work') navigate('/jobs');
             }}
           >
             {btnTxt}
@@ -77,8 +78,13 @@ function Dashboard() {
       )}
       {ctx.role === "worker" && (
         <>
-          <Box>Post a Job</Box>
-          <Box>Post a Job</Box>
+          <ActionCard
+            title="find Work"
+            image="/seek-work.jpg"
+            description="Find work in your profession and make a bid."
+            btnTxt="Find Work"
+            action="work"
+          />
         </>
       )}
     </Box>
